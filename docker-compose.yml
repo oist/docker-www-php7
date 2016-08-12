@@ -39,7 +39,13 @@ database:
   environment: { MYSQL_DATABASE: www, MYSQL_USER: www, MYSQL_PASSWORD: www, MYSQL_ALLOW_EMPTY_PASSWORD: 'yes', MYSQL_ROOT_PASSWORD: 'root' }
 memcached:
   image: memcached
-  ports: [11211]
+  ports:
+    - "11211:11211"
   links:
     - web
     - php
+mailhog:
+  image: mailhog/mailhog
+  ports:
+    - "8025:8025"
+    - "1025:1025"
