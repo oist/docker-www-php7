@@ -14,5 +14,4 @@ RUN mkdir -p /tmp/nginx && \
 # Expose the ports for nginx
 EXPOSE 8080 443
 
-#CMD ["/usr/sbin/nginx", "-g", "pid /tmp/nginx.pid; daemon off;"]
 CMD ["/usr/sbin/nginx"]
