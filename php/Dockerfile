@@ -1,6 +1,6 @@
 FROM alpine:3.4
 
-#Install PHP7, Pygments and Git
+# Install PHP7, Pygments and Git
 RUN echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
     apk update && \
     apk --update add \
@@ -10,6 +10,7 @@ RUN echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositor
       php7-ctype \
       php7-curl \
       php7-dom \
+      php7-exif \
       php7-fpm \
       php7-gd \
       php7-gettext \
@@ -25,7 +26,6 @@ RUN echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositor
   		php7-openssl \
       php7-pcntl \
       php7-pdo \
-      php7-pdo_dblib \
       php7-pdo_mysql \
       php7-phar \
       php7-session \
@@ -35,6 +35,7 @@ RUN echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositor
       php7-xmlreader \
   		php7-xmlrpc \
       php7-zip \
+      php7-zlib \
       bash \
       curl \
 		  git \
@@ -44,7 +45,7 @@ RUN echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositor
       unzip && \
     rm -rf /var/cache/apk/*
 
-#Build apcu & apcu_bc for PHP7
+# Build apcu & apcu_bc for PHP7
 RUN apk --update add \
 		  autoconf \
 		  php7-pear \
@@ -61,7 +62,7 @@ RUN apk --update add \
       alpine-sdk && \
     rm -rf /var/cache/apk/*
 
-#Link php7 exec to more standard php name
+# Link php7 exec to more standard php name
 RUN ln -s /usr/bin/php7 /usr/bin/php \
     && rm -rf /etc/php7/php-fpm.d \
 	  && mkdir -p /srv \
@@ -72,17 +73,13 @@ RUN ln -s /usr/bin/php7 /usr/bin/php \
     && mkdir -p /var/logs/php-fpm \
     && ln -fs /proc/self/fd/2 /var/tmp/phd/log/daemons.log
 
-# add www-data user
+# Add www-data user
 RUN mkdir -p /home/www-data && \
     addgroup -g 433 -S www-data && \
     adduser -u 431 -S -D -G www-data -h /home/www-data -s /sbin/nologin www-data && \
-    chown -R www-data:www-data /home/www-data
-
-#Set port
-EXPOSE 9000
-
-#CMD ["php-fpm7", "-F"]
-
+    chown -R www-data:www-data /home/www-data && \
+    mkdir -p /var/www/html && \
+    chown -R www-data:www-data /var/www/html
 
 # Install Composer
 ENV COMPOSER_VERSION 1.2.0
@@ -98,6 +95,10 @@ RUN git clone https://github.com/drush-ops/drush.git /usr/local/src/drush && \
     composer install
 RUN drush --version
 
+#Set port
+EXPOSE 9000
+
+# Default workdir to the nginx vhost so we can drush directly.
 WORKDIR /var/www/html
 
 COPY run.sh /tmp/run.sh
