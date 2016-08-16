@@ -7,6 +7,8 @@ web:
   links:
     - database
     - php
+    - memcached
+    - mailhog
   volumes:
     - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
     - ./nginx/conf/www.conf:/etc/nginx/sites-enabled/www.conf
@@ -26,6 +28,8 @@ php:
     - ./www:/var/www/html
   links:
     - database
+    - memcached
+    - mailhog
   environment: { PLATFORM_DOCKER: www, PHP_IDE_CONFIG: serverName=www.oist.dev }
 database:
   command: 'mysqld --user=root --verbose'
@@ -41,9 +45,6 @@ memcached:
   image: memcached
   ports:
     - "11211:11211"
-  links:
-    - web
-    - php
 mailhog:
   image: mailhog/mailhog
   ports:
