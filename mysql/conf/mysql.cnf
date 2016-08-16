@@ -31,13 +31,23 @@ sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
 symbolic-links=0
 
 # Drupal DB tweaks - https://groups.drupal.org/node/289613
-key_buffer_size = 32M
-max_allowed_packet = 16M
-tmp_table_size = 64M
-max_heap_table_size = 64M
-query_cache_size = 4M
-query_cache_limit = 256K
+key_buffer_size = 64M
+max_allowed_packet = 32M
+tmp_table_size = 128M
+max_heap_table_size = 128M
+query_cache_size = 16M
+query_cache_limit = 512K
 thread_cache_size = 128
+
+# INNODB
+innodb_buffer_pool_size = 1G
+innodb_buffer_pool_instances = 4
+innodb_flush_method = O_DIRECT
+innodb_log_files_in_group = 2
+innodb_log_file_size = 256M
+innodb_log_buffer_size = 4M
+innodb_lock_wait_timeout = 180
+innodb_file_per_table = 1
 
 # * IMPORTANT: Additional settings that can override those from this file!
 #   The files must end with '.cnf', otherwise they'll be ignored.
