@@ -1,5 +1,9 @@
 FROM alpine:3.4
 
+# Create user www-data
+RUN addgroup -g 82 -S www-data && \
+    adduser -u 82 -D -S -G www-data www-data
+
 # Install PHP7, Pygments and Git
 RUN echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
     apk update && \
@@ -45,22 +49,27 @@ RUN echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositor
       unzip && \
     rm -rf /var/cache/apk/*
 
-# Build apcu & apcu_bc for PHP7
-RUN apk --update add \
-		  autoconf \
-		  php7-pear \
-	    php7-dev \
-		  alpine-sdk && \
-    sed -i "s/exec \$PHP -C -n -q/exec \$PHP -C -q/g" /usr/bin/pecl && \
-    printf "\n" | pecl install apcu apcu_bc-beta && \
-    echo "extension=apcu.so" > /etc/php7/conf.d/apcu.ini && \
-    echo "extension=apc.so"  > /etc/php7/conf.d/z_apc.ini && \
-	  apk del --purge \
-		  autoconf \
-		  php7-pear \
-		  php7-dev \
-      alpine-sdk && \
-    rm -rf /var/cache/apk/*
+    # Build apcu & apcu_bc for PHP7
+    RUN apk --update add \
+        autoconf \
+        build-base \
+        libtool \
+        php7-pear \
+        php7-dev \
+        alpine-sdk && \
+        sed -i "s/exec \$PHP -C -n -q/exec \$PHP -C -q/g" /usr/bin/pecl && \
+        printf "\n" | pecl install apcu apcu_bc-beta && \
+        echo "extension=apcu.so" > /etc/php7/conf.d/apcu.ini && \
+        echo "extension=apc.so"  > /etc/php7/conf.d/z_apc.ini && \
+        sed -ie 's/-n//g' /usr/bin/pecl && \
+    	  apk del --purge \
+    		  autoconf \
+          build-base \
+          libtool \
+    		  php7-pear \
+    		  php7-dev \
+          alpine-sdk && \
+        rm -rf /var/cache/apk/*
 
 # Link php7 exec to more standard php name
 RUN ln -s /usr/bin/php7 /usr/bin/php \
@@ -72,14 +81,6 @@ RUN ln -s /usr/bin/php7 /usr/bin/php \
 	  && mkdir -p /var/tmp/phd/log \
     && mkdir -p /var/logs/php-fpm \
     && ln -fs /proc/self/fd/2 /var/tmp/phd/log/daemons.log
-
-# Add www-data user
-RUN mkdir -p /home/www-data && \
-    addgroup -g 433 -S www-data && \
-    adduser -u 431 -S -D -G www-data -h /home/www-data -s /sbin/nologin www-data && \
-    chown -R www-data:www-data /home/www-data && \
-    mkdir -p /var/www/html && \
-    chown -R www-data:www-data /var/www/html
 
 # Install Composer
 ENV COMPOSER_VERSION 1.2.0
@@ -95,11 +96,14 @@ RUN git clone https://github.com/drush-ops/drush.git /usr/local/src/drush && \
     composer install
 RUN drush --version
 
-#Set port
-EXPOSE 9000
-
-# Default workdir to the nginx vhost so we can drush directly.
+# Create workdir
+RUN mkdir -p /var/www/html && \
+    chown -R www-data:www-data /var/www && \
+    chmod -R 774 /var/www && \
+    umask 774 /var/www
 WORKDIR /var/www/html
+
+EXPOSE 9000
 
 COPY run.sh /tmp/run.sh
 RUN chmod +x /tmp/run.sh

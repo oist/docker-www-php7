@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Set the right owner and permissions.
-chown -R www-data:www-data /var/www/html
-chmod -R gu+w /var/www/html
-umask 774 /var/www/html
-
 # Sort of semaphore process to ensure that the db is there when we run the drush
 # commands.
 BOOTSTRAP=`drush status | grep "Drupal bootstrap                :  Successful" | wc -l`
