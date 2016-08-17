@@ -2,7 +2,7 @@
 
 # Set the right owner and permissions.
 chown -R www-data:www-data /var/www/html
-chmod -R go+w /var/www/html
+chmod -R gu+w /var/www/html
 
 # Sort of semaphore process to ensure that the db is there when we run the drush
 # commands.
