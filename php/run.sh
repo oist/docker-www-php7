@@ -3,6 +3,7 @@
 # Set the right owner and permissions.
 chown -R www-data:www-data /var/www/html
 chmod -R gu+w /var/www/html
+umask 774 /var/www/html
 
 # Sort of semaphore process to ensure that the db is there when we run the drush
 # commands.
@@ -26,4 +27,4 @@ drush uli
 echo "--------------------------------------------------------------------------"
 
 # Run php fpm
-php-fpm7 --allow-to-run-as-root --nodaemonize --fpm-config /etc/php7/php-fpm.conf
+php-fpm7 --nodaemonize --fpm-config /etc/php7/php-fpm.conf

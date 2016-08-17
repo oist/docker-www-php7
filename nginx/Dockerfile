@@ -9,7 +9,9 @@ RUN apk add -u musl
 RUN rm -rf /var/cache/apk/*
 RUN mkdir -p /tmp/nginx && \
     mkdir -p /etc/nginx/sites-enabled && \
-    mkdir -p /var/www/html
+    mkdir -p /var/www/html && \
+    chmod -R gu+w /var/www/html && \
+    umask 774 /var/www/html
 
 # Expose the ports for nginx
 EXPOSE 8080 443
