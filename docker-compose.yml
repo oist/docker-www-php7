@@ -7,7 +7,7 @@ web:
   links:
     - database
     - php
-    - memcached
+    - memcache
     - mailhog
   volumes:
     - ./nginx/conf/nginx.conf:/etc/nginx/nginx.conf
@@ -41,8 +41,8 @@ database:
     - ./mysql/conf/mysql.cnf:/etc/mysql/my.cnf
     - ./db-seeds:/docker-entrypoint-initdb.d/
   environment: { MYSQL_DATABASE: www, MYSQL_USER: www, MYSQL_PASSWORD: www, MYSQL_ALLOW_EMPTY_PASSWORD: 'yes', MYSQL_ROOT_PASSWORD: 'root' }
-memcached:
-  image: memcached
+memcache:
+  image: bpressure/alpine-memcached:latest
   ports:
     - "11211:11211"
 mailhog:
