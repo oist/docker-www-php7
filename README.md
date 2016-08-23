@@ -1,4 +1,4 @@
-This is a dockerized version of www.oist.jp. It will be available at www.oist.dev after this setup
+This is a dockerized version of www.oist.jp using PHP7 and nginx. It will be available at www.oist.dev after this setup
 
 ## Requirements
 
