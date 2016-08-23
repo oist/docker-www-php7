@@ -1,8 +1,10 @@
 # Project ignores
 data/*
 db-seeds/*
-# TODO: Decided whether this is a shell or part of the project
 www/*
+!data/README.md
+!db-seeds/README.md
+!www/README.md
 
 # OSX Specific stuff
 *.DS_Store
@@ -11,7 +13,6 @@ www/*
 
 # Icon must end with two \r
 Icon
-
 
 # Thumbnails
 ._*
