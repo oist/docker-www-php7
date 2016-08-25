@@ -45,6 +45,7 @@ RUN echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositor
 		  git \
       mysql-client \
       openssl \
+      openssh \
 		  py-pygments \
       unzip && \
     rm -rf /var/cache/apk/*
