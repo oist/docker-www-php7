@@ -17,6 +17,12 @@ RUN rm -rf /var/cache/apk/*
 RUN mkdir -p /tmp/nginx && \
     mkdir -p /etc/nginx/sites-enabled
 
+# COPY the configuration files
+COPY conf/nginx.conf /etc/nginx/nginx.conf
+COPY conf/drupal8.conf /etc/nginx/sites-enabled/www.conf
+COPY conf/ssl/nginx.crt /etc/nginx/ssl/nginx.crt
+COPY conf/ssl/nginx.key /etc/nginx/ssl/nginx.key
+
 # Expose the ports for nginx
 EXPOSE 80 443
 

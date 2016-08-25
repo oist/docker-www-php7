@@ -102,7 +102,13 @@ RUN mkdir -p /var/www/html && \
     chown -R www-data:www-data /var/www && \
     chmod -R 774 /var/www && \
     umask 774 /var/www
+
 WORKDIR /var/www/html
+
+# COPY configuration files.
+COPY conf/fpm.conf /etc/php7/php-fpm.conf
+COPY conf/php.ini /etc/php7/php.ini
+COPY conf/conf.d/xdebug.ini /etc/php7/conf.d/xdebug.ini
 
 EXPOSE 9000
 
