@@ -28,7 +28,7 @@ php:
     - ./www:/var/www/html
   links:
     - database
-    - memcached
+    - memcache
     - mailhog
   environment: { PLATFORM_DOCKER: www, PHP_IDE_CONFIG: serverName=www.oist.dev }
 database:
