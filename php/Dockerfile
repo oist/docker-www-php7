@@ -5,7 +5,8 @@ RUN addgroup -g 82 -S www-data && \
     adduser -u 82 -D -S -G www-data www-data
 
 # Install PHP7, Pygments and Git
-RUN echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
+RUN echo "http://dl-4.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
+    echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
     apk update && \
     apk --update add \
       php7 \

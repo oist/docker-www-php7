@@ -8,12 +8,13 @@ RUN addgroup -S -g 82 www-data && \
     addgroup nginx www-data
 
 # Install nginx
-RUN echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-RUN apk update
-RUN apk add nginx ca-certificates
+RUN echo "http://dl-4.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
+    echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
+    apk update && \
+    apk --update add nginx ca-certificates && \
+    rm -rf /var/cache/apk/*
 
 RUN apk add -u musl
-RUN rm -rf /var/cache/apk/*
 RUN mkdir -p /tmp/nginx && \
     mkdir -p /etc/nginx/sites-enabled
 
