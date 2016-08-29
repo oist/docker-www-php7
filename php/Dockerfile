@@ -2,7 +2,7 @@ FROM alpine:3.4
 
 # Create user www-data
 RUN addgroup -g 82 -S www-data && \
-    adduser -u 82 -D -S -G www-data www-data
+    adduser -u 82 -D -S -G www-data nginx
 
 # Install PHP7, Pygments and Git
 RUN echo "http://dl-4.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
@@ -100,7 +100,7 @@ RUN drush --version
 
 # Create workdir
 RUN mkdir -p /var/www/html && \
-    chown -R www-data:www-data /var/www && \
+    chown -R nginx:www-data /var/www && \
     chmod -R 774 /var/www && \
     umask 774 /var/www
 
