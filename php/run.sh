@@ -6,7 +6,7 @@ BOOTSTRAP=`drush status | grep "Drupal bootstrap                :  Successful" |
 until [ "$BOOTSTRAP" -ge "1" ]; do
   >&2 echo "Waiting for the database to be ready"
   BOOTSTRAP=`drush status | grep "Drupal bootstrap                :  Successful" | wc -l`
-  sleep 5
+  sleep 20
 done
 >&2 echo "Running drush commands"
 

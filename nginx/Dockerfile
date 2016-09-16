@@ -20,7 +20,7 @@ RUN mkdir -p /tmp/nginx && \
 
 # COPY the configuration files
 COPY conf/nginx.conf /etc/nginx/nginx.conf
-COPY conf/drupal8.conf /etc/nginx/sites-enabled/www.conf
+COPY conf/www.conf /etc/nginx/sites-enabled/www.conf
 COPY conf/ssl/nginx.crt /etc/nginx/ssl/nginx.crt
 COPY conf/ssl/nginx.key /etc/nginx/ssl/nginx.key
 
