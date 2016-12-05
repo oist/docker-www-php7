@@ -10,9 +10,10 @@ See the README.dnsmasq.md file for reference.
 ## Setup
 
 - Place the right database export in the db-seeds folder. Bear in mind that all sql **or** compressed files in that folder will be imported in the first run.
-- Clone the www repository in the www folder. The following files will need to be added:
-  - sites/default/settings.php
-  - This files can be found in the folder drupal-extra-conf. Feel free to modify these files at will.
+- Clone the www repository in the www folder:
+```git@github.com:oist/www.git```
+- Add the settings.php file from the folder drupal-extra-conf into the following path: sites/default/settings.php
+```cp drupal-extra-conf/settings.php www/sites/default/settings.php```
 - Build the docker images:
 ```
 docker-compose --verbose build
@@ -23,5 +24,5 @@ docker-compose up
 ```
 - To safely rebuild and restart the containers, use a combination of down, build & up.
 ```
-docker-compose down && docker-compose --verbose build && docker-compose up
+docker-compose down && docker-compose up --build -d
 ```

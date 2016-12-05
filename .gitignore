@@ -1,10 +1,9 @@
 # Project ignores
-data/*
+data
 db-seeds/*
-www/*
+www
 !data/README.md
 !db-seeds/README.md
-!www/README.md
 
 # OSX Specific stuff
 *.DS_Store
