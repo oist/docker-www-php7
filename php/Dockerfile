@@ -1,17 +1,14 @@
-FROM alpine:3.4
+FROM alpine:edge
 
 # Create user www-data
 RUN addgroup -g 82 -S www-data && \
     adduser -u 82 -D -S -G www-data nginx
 
 # Install PHP7, Pygments and Git
-RUN echo "http://dl-4.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
-    echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
-    apk update && \
+RUN echo "http://dl-4.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
     apk --update add \
       php7 \
       php7-bcmath \
-      php7-bz2 \
       php7-ctype \
       php7-curl \
       php7-dom \
@@ -51,7 +48,6 @@ RUN echo "http://dl-4.alpinelinux.org/alpine/edge/community" >> /etc/apk/reposit
       unzip && \
     rm -rf /var/cache/apk/*
 
-    # Build apcu & apcu_bc for PHP7
     RUN apk --update add \
         autoconf \
         build-base \

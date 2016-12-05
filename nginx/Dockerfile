@@ -1,4 +1,4 @@
-FROM alpine:3.4
+FROM alpine:edge
 
 # Create user and groups
 # Based on http://git.alpinelinux.org/cgit/aports/tree/main/nginx-initscripts/nginx-initscripts.pre-install
