@@ -1,12 +1,5 @@
 <?php
 
-$conf['memcache_servers'] = array('memcache:11211' => 'default');
-$conf['cache_backends'][] = 'sites/all/modules/memcache/memcache.inc';
-$conf['cache_default_class'] = 'MemCacheDrupal';
-$conf['cache_class_cache_form'] = 'DrupalDatabaseCache';
-$conf['page_cache_without_database'] = TRUE;
-$conf['page_cache_invoke_hooks'] = FALSE;
-
 /**
  * @file
  * Drupal site-specific configuration file.
